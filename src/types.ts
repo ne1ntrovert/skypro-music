@@ -6,7 +6,25 @@ export type Track = {
   genre: string[];
   duration_in_seconds: number;
   album: string;
-  logo: string | null;
+  logo: unknown;
   track_file: string;
-  stared_user: number[];
+  staredUser: number[];
+};
+
+export type Selection = {
+  _id: number;
+  name: string;
+  items: number[];
+  owner: number[];
+};
+
+export type User = {
+  _id: number;
+  email: string;
+  username: string;
+};
+
+export type Tokens = {
+  access: string;
+  refresh: string;
 };

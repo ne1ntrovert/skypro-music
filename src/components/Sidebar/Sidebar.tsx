@@ -3,9 +3,9 @@ import Link from 'next/link';
 import styles from './Sidebar.module.css';
 
 const playlists = [
-  { id: 1, src: '/img/playlist01.png', alt: 'Плейлист дня' },
-  { id: 2, src: '/img/playlist02.png', alt: '100 танцевальных хитов' },
-  { id: 3, src: '/img/playlist03.png', alt: 'Инди-заряд' },
+  { id: 2, src: '/img/playlist01.png', alt: 'Плейлист дня' },
+  { id: 3, src: '/img/playlist02.png', alt: '100 танцевальных хитов' },
+  { id: 4, src: '/img/playlist03.png', alt: 'Инди-заряд' },
 ];
 
 export default function Sidebar() {
@@ -22,7 +22,10 @@ export default function Sidebar() {
         <div className={styles.sidebar__list}>
           {playlists.map((playlist) => (
             <div key={playlist.id} className={styles.sidebar__item}>
-              <Link className={styles.sidebar__link} href="#">
+              <Link
+                className={styles.sidebar__link}
+                href={`/selection/${playlist.id}`}
+              >
                 <Image
                   className={styles.sidebar__img}
                   src={playlist.src}

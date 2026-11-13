@@ -42,7 +42,14 @@ export default function Nav() {
               </Link>
             </li>
             <li className={styles.menu__item}>
-              <Link href="/signin" className={styles.menu__link}>
+              <Link
+                href="/signin"
+                className={styles.menu__link}
+                onClick={() => {
+                  localStorage.removeItem('user');
+                  localStorage.removeItem('tokens');
+                }}
+              >
                 Выйти
               </Link>
             </li>

@@ -21,7 +21,7 @@ export default function Playlist({ tracks }: PlaylistProps) {
       </div>
       <div className={styles.content__playlist}>
         {tracks.map((track) => (
-          <TrackItem key={track._id} track={track} />
+          <TrackItem key={track._id} track={track} playlist={tracks} />
         ))}
       </div>
     </>

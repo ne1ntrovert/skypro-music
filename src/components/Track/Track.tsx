@@ -3,20 +3,16 @@
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setCurrentTrack } from '@/store/features/playerSlice';
+import { formatTime } from '@/utils/formatTime';
 import { Track } from '@/types';
 import styles from './Track.module.css';
 
 type TrackProps = {
   track: Track;
+  playlist: Track[];
 };
 
-const formatTime = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60);
-  const rest = seconds % 60;
-  return `${minutes}:${rest.toString().padStart(2, '0')}`;
-};
-
-export default function TrackItem({ track }: TrackProps) {
+export default function TrackItem({ track, playlist }: TrackProps) {
   const dispatch = useAppDispatch();
   const { currentTrack, isPlaying } = useAppSelector((state) => state.player);
   const isCurrent = currentTrack?._id === track._id;
@@ -24,7 +20,7 @@ export default function TrackItem({ track }: TrackProps) {
   return (
     <div
       className={styles.playlist__item}
-      onClick={() => dispatch(setCurrentTrack(track))}
+      onClick={() => dispatch(setCurrentTrack({ track, playlist }))}
     >
       <div className={styles.playlist__track}>
         <div className={styles.track__title}>
