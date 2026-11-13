@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav/Nav';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Bar from '@/components/Bar/Bar';
+import Notification from '@/components/Notification/Notification';
 import styles from './layout.module.css';
 
 export default function MainLayout({
@@ -17,6 +18,7 @@ export default function MainLayout({
           <Sidebar />
         </main>
         <Bar />
+        <Notification />
       </div>
     </div>
   );

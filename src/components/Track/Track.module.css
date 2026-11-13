@@ -108,12 +108,8 @@
   align-items: center;
 }
 
-.track__timeSvg {
-  width: 14px;
-  height: 12px;
+.track__like {
   margin-right: 17px;
-  fill: transparent;
-  stroke: #696969;
 }
 
 .track__timeText {

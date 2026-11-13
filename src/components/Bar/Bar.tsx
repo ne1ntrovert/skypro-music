@@ -9,13 +9,18 @@ import {
   setIsPlaying,
   toggleShuffle,
 } from '@/store/features/playerSlice';
+import { toggleLike } from '@/store/features/favoritesSlice';
 import { formatTime } from '@/utils/formatTime';
+import LikeButton from '@/components/LikeButton/LikeButton';
 import styles from './Bar.module.css';
 
 export default function Bar() {
   const dispatch = useAppDispatch();
   const { currentTrack, isPlaying, isShuffle } = useAppSelector(
     (state) => state.player,
+  );
+  const isLiked = useAppSelector((state) =>
+    state.favorites.tracks.some((t) => t._id === currentTrack?._id),
   );
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isLoop, setIsLoop] = useState(false);
@@ -53,6 +58,10 @@ export default function Bar() {
     const time = Number(event.target.value);
     if (audioRef.current) audioRef.current.currentTime = time;
     setCurrentTime(time);
+  };
+
+  const handleDislike = () => {
+    if (isLiked) dispatch(toggleLike(currentTrack));
   };
 
   return (
@@ -158,18 +167,15 @@ export default function Bar() {
               </div>
 
               <div className={styles.trackPlay__likeDis}>
-                <div
-                  className={classNames(styles.trackPlay__like, styles.btnIcon)}
-                >
-                  <svg className={styles.trackPlay__likeSvg}>
-                    <use href="/img/icon/sprite.svg#icon-like"></use>
-                  </svg>
+                <div className={styles.trackPlay__like}>
+                  <LikeButton track={currentTrack} />
                 </div>
                 <div
                   className={classNames(
                     styles.trackPlay__dislike,
                     styles.btnIcon,
                   )}
+                  onClick={handleDislike}
                 >
                   <svg className={styles.trackPlay__dislikeSvg}>
                     <use href="/img/icon/sprite.svg#icon-dislike"></use>

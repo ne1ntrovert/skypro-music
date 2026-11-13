@@ -6,10 +6,15 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getTokens, login } from '@/api/api';
+import { useAppDispatch } from '@/store/hooks';
+import { setAuth } from '@/store/features/authSlice';
+import { fetchFavorites } from '@/store/features/favoritesSlice';
+import { saveAuth } from '@/utils/authStorage';
 import styles from './signin.module.css';
 
 export default function Signin() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -22,8 +27,9 @@ export default function Signin() {
     try {
       const user = await login(email, password);
       const tokens = await getTokens(email, password);
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('tokens', JSON.stringify(tokens));
+      saveAuth({ user, tokens });
+      dispatch(setAuth({ user, tokens }));
+      dispatch(fetchFavorites());
       router.push('/');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Не удалось войти');
