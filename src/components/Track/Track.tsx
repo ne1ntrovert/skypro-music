@@ -1,31 +1,30 @@
 'use client';
 
+import { useCallback } from 'react';
 import classNames from 'classnames';
+import LikeButton from '@/components/LikeButton/LikeButton';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setCurrentTrack } from '@/store/features/playerSlice';
+import { formatTime } from '@/utils/formatTime';
 import { Track } from '@/types';
 import styles from './Track.module.css';
 
 type TrackProps = {
   track: Track;
+  playlist: Track[];
 };
 
-const formatTime = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60);
-  const rest = seconds % 60;
-  return `${minutes}:${rest.toString().padStart(2, '0')}`;
-};
-
-export default function TrackItem({ track }: TrackProps) {
+export default function TrackItem({ track, playlist }: TrackProps) {
   const dispatch = useAppDispatch();
   const { currentTrack, isPlaying } = useAppSelector((state) => state.player);
   const isCurrent = currentTrack?._id === track._id;
 
+  const handleClick = useCallback(() => {
+    dispatch(setCurrentTrack({ track, playlist }));
+  }, [dispatch, track, playlist]);
+
   return (
-    <div
-      className={styles.playlist__item}
-      onClick={() => dispatch(setCurrentTrack(track))}
-    >
+    <div className={styles.playlist__item} onClick={handleClick}>
       <div className={styles.playlist__track}>
         <div className={styles.track__title}>
           <div className={styles.track__titleImage}>
@@ -54,9 +53,7 @@ export default function TrackItem({ track }: TrackProps) {
           <span className={styles.track__albumLink}>{track.album}</span>
         </div>
         <div className={styles.track__time}>
-          <svg className={styles.track__timeSvg}>
-            <use href="/img/icon/sprite.svg#icon-like"></use>
-          </svg>
+          <LikeButton track={track} className={styles.track__like} />
           <span className={styles.track__timeText}>
             {formatTime(track.duration_in_seconds)}
           </span>

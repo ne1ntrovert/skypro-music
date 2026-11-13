@@ -14,7 +14,35 @@
 .bar__playerProgress {
   width: 100%;
   height: 5px;
+  margin: 0;
+  appearance: none;
   background: #2e2e2e;
+  cursor: pointer;
+}
+
+.bar__playerProgress::-webkit-slider-runnable-track {
+  height: 5px;
+  background: transparent;
+}
+
+.bar__playerProgress::-webkit-slider-thumb {
+  appearance: none;
+  width: 0;
+  height: 0;
+}
+
+.bar__playerProgress::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+}
+
+.bar__time {
+  font-size: 14px;
+  line-height: 24px;
+  color: #696969;
+  margin-right: 30px;
+  white-space: nowrap;
 }
 
 .bar__playerBlock {
@@ -174,13 +202,6 @@
   padding: 5px;
 }
 
-.trackPlay__likeSvg {
-  width: 14px;
-  height: 12px;
-  fill: transparent;
-  stroke: #696969;
-}
-
 .trackPlay__dislike {
   margin-left: 28.5px;
 }
@@ -254,13 +275,16 @@
   cursor: pointer;
 }
 
+.active svg {
+  stroke: #ffffff;
+}
+
 .btnIcon:active svg {
   fill: transparent;
   stroke: #ffffff;
   cursor: pointer;
 }
 
-.btnIcon:active .trackPlay__likeSvg,
 .btnIcon:active .trackPlay__dislikeSvg {
   fill: #696969;
   stroke: #ffffff;

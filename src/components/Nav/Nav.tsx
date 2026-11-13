@@ -1,12 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { logout } from '@/store/features/authSlice';
+import { clearAuth } from '@/utils/authStorage';
 import styles from './Nav.module.css';
 
 export default function Nav() {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleLogout = useCallback(() => {
+    dispatch(logout());
+    clearAuth();
+  }, [dispatch]);
 
   return (
     <nav className={styles.main__nav}>
@@ -37,14 +47,24 @@ export default function Nav() {
               </Link>
             </li>
             <li className={styles.menu__item}>
-              <Link href="#" className={styles.menu__link}>
+              <Link href="/favorites" className={styles.menu__link}>
                 Мои треки
               </Link>
             </li>
             <li className={styles.menu__item}>
-              <Link href="/signin" className={styles.menu__link}>
-                Выйти
-              </Link>
+              {user ? (
+                <Link
+                  href="/"
+                  className={styles.menu__link}
+                  onClick={handleLogout}
+                >
+                  Выйти
+                </Link>
+              ) : (
+                <Link href="/signin" className={styles.menu__link}>
+                  Войти
+                </Link>
+              )}
             </li>
           </ul>
         </div>

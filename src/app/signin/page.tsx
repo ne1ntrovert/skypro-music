@@ -1,14 +1,47 @@
+'use client';
+
+import { FormEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getTokens, login } from '@/api/api';
+import { useAppDispatch } from '@/store/hooks';
+import { setAuth } from '@/store/features/authSlice';
+import { fetchFavorites } from '@/store/features/favoritesSlice';
+import { saveAuth } from '@/utils/authStorage';
 import styles from './signin.module.css';
 
 export default function Signin() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    setError('');
+    setIsLoading(true);
+    try {
+      const user = await login(email, password);
+      const tokens = await getTokens(email, password);
+      saveAuth({ user, tokens });
+      dispatch(setAuth({ user, tokens }));
+      dispatch(fetchFavorites());
+      router.push('/');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Не удалось войти');
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.containerEnter}>
         <div className={styles.modal__block}>
-          <form className={styles.modal__form}>
+          <form className={styles.modal__form} onSubmit={handleSubmit}>
             <Link href="/">
               <div className={styles.modal__logo}>
                 <Image
@@ -24,15 +57,21 @@ export default function Signin() {
               type="text"
               name="login"
               placeholder="Почта"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
             />
             <input
               className={styles.modal__input}
               type="password"
               name="password"
               placeholder="Пароль"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
             />
-            <div className={styles.errorContainer}></div>
-            <button className={styles.modal__btnEnter}>Войти</button>
+            <div className={styles.errorContainer}>{error}</div>
+            <button className={styles.modal__btnEnter} disabled={isLoading}>
+              Войти
+            </button>
             <Link href="/signup" className={styles.modal__btnSignup}>
               Зарегистрироваться
             </Link>

@@ -56,3 +56,9 @@
   display: flex;
   flex-direction: column;
 }
+
+.centerblock__error {
+  font-size: 18px;
+  line-height: 24px;
+  color: #ff5a5a;
+}

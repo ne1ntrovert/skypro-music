@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import { Track } from '@/types';
 import styles from './Filter.module.css';
@@ -20,27 +20,30 @@ type FilterItem = {
 export default function Filter({ tracks }: FilterProps) {
   const [activeFilter, setActiveFilter] = useState<FilterName | null>(null);
 
-  const filters: FilterItem[] = [
-    {
-      name: 'author',
-      title: 'исполнителю',
-      items: [...new Set(tracks.map((track) => track.author))],
-    },
-    {
-      name: 'year',
-      title: 'году выпуска',
-      items: ['По умолчанию', 'Сначала новые', 'Сначала старые'],
-    },
-    {
-      name: 'genre',
-      title: 'жанру',
-      items: [...new Set(tracks.flatMap((track) => track.genre))],
-    },
-  ];
+  const filters = useMemo<FilterItem[]>(
+    () => [
+      {
+        name: 'author',
+        title: 'исполнителю',
+        items: [...new Set(tracks.map((track) => track.author))],
+      },
+      {
+        name: 'year',
+        title: 'году выпуска',
+        items: ['По умолчанию', 'Сначала новые', 'Сначала старые'],
+      },
+      {
+        name: 'genre',
+        title: 'жанру',
+        items: [...new Set(tracks.flatMap((track) => track.genre))],
+      },
+    ],
+    [tracks],
+  );
 
-  const toggleFilter = (name: FilterName) => {
-    setActiveFilter(activeFilter === name ? null : name);
-  };
+  const toggleFilter = useCallback((name: FilterName) => {
+    setActiveFilter((current) => (current === name ? null : name));
+  }, []);
 
   return (
     <div className={styles.centerblock__filter}>

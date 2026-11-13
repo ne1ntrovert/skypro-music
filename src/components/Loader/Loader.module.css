@@ -1,0 +1,52 @@
+.loader {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.loader__row {
+  display: flex;
+  align-items: center;
+  height: 51px;
+}
+
+.loader__image,
+.loader__name,
+.loader__author,
+.loader__album {
+  background-color: #313131;
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+.loader__image {
+  width: 51px;
+  height: 51px;
+  margin-right: 17px;
+}
+
+.loader__name {
+  width: 356px;
+  height: 19px;
+  margin-right: 23px;
+}
+
+.loader__author {
+  width: 271px;
+  height: 19px;
+  margin-right: 50px;
+}
+
+.loader__album {
+  width: 305px;
+  height: 19px;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
