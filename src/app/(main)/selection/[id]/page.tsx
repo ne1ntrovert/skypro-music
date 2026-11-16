@@ -28,5 +28,5 @@ export default async function SelectionPage({ params }: SelectionPageProps) {
     error =
       err instanceof Error ? err.message : 'Не удалось загрузить подборку';
   }
-  return <Centerblock title={title} tracks={tracks} error={error} />;
+  return <Centerblock key={id} title={title} tracks={tracks} error={error} />;
 }

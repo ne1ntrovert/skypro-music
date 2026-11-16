@@ -40,6 +40,21 @@
   color: #d9b6ff;
 }
 
+.filter__count {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 13px;
+  background-color: #ad61ff;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 26px;
+  text-align: center;
+}
+
 .filter__button:active,
 .filter__button.active {
   border-color: #ad61ff;
@@ -85,6 +100,11 @@
   line-height: 24px;
   white-space: nowrap;
   cursor: pointer;
+}
+
+.filter__item_selected {
+  color: #b672ff;
+  text-decoration: underline;
 }
 
 .filter__item:hover {

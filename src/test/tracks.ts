@@ -1,0 +1,40 @@
+import { Track } from '@/types';
+
+export const tracks: Track[] = [
+  {
+    _id: 1,
+    name: 'Hard Metal Intro',
+    author: 'Winniethemoog',
+    release_date: '1991-09-06',
+    genre: ['Рок музыка'],
+    duration_in_seconds: 255,
+    album: 'Hard Metal',
+    logo: null,
+    track_file: 'https://example.com/1.mp3',
+    staredUser: [],
+  },
+  {
+    _id: 2,
+    name: 'Adrenalynne',
+    author: 'Tim Kulig',
+    release_date: '2020-01-15',
+    genre: ['Электронная музыка'],
+    duration_in_seconds: 285,
+    album: 'Adrenaline EP',
+    logo: null,
+    track_file: 'https://example.com/2.mp3',
+    staredUser: [],
+  },
+  {
+    _id: 3,
+    name: 'Harmony',
+    author: 'Winniethemoog',
+    release_date: '2005-06-11',
+    genre: ['Классическая музыка', 'Рок музыка'],
+    duration_in_seconds: 65,
+    album: 'Harmony Album',
+    logo: null,
+    track_file: 'https://example.com/3.mp3',
+    staredUser: [],
+  },
+];
