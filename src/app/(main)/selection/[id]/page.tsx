@@ -1,6 +1,7 @@
 import Centerblock from '@/components/Centerblock/Centerblock';
 import { getSelection, getTracks } from '@/api/api';
 import { Track } from '@/types';
+import { getErrorMessage } from '@/utils/getErrorMessage';
 
 type SelectionPageProps = {
   params: Promise<{ id: string }>;
@@ -25,8 +26,7 @@ export default async function SelectionPage({ params }: SelectionPageProps) {
       error = 'Подборка не найдена';
     }
   } catch (err) {
-    error =
-      err instanceof Error ? err.message : 'Не удалось загрузить подборку';
+    error = getErrorMessage(err, 'Не удалось загрузить подборку');
   }
   return <Centerblock key={id} title={title} tracks={tracks} error={error} />;
 }

@@ -26,8 +26,16 @@ const shuffle = (tracks: Track[]) => {
   return result;
 };
 
-const getActiveList = (state: PlayerState) =>
-  state.isShuffle ? state.shuffledPlaylist : state.playlist;
+const switchTrack = (state: PlayerState, step: 1 | -1) => {
+  const tracks = state.isShuffle ? state.shuffledPlaylist : state.playlist;
+  const currentIndex = tracks.findIndex(
+    (track) => track._id === state.currentTrack?._id,
+  );
+  const targetTrack = tracks[currentIndex + step];
+  if (currentIndex === -1 || !targetTrack) return;
+  state.currentTrack = targetTrack;
+  state.isPlaying = true;
+};
 
 const playerSlice = createSlice({
   name: 'player',
@@ -50,18 +58,10 @@ const playerSlice = createSlice({
       state.shuffledPlaylist = shuffle(state.playlist);
     },
     nextTrack(state) {
-      const list = getActiveList(state);
-      const index = list.findIndex((t) => t._id === state.currentTrack?._id);
-      if (index === -1 || index >= list.length - 1) return;
-      state.currentTrack = list[index + 1];
-      state.isPlaying = true;
+      switchTrack(state, 1);
     },
     prevTrack(state) {
-      const list = getActiveList(state);
-      const index = list.findIndex((t) => t._id === state.currentTrack?._id);
-      if (index <= 0) return;
-      state.currentTrack = list[index - 1];
-      state.isPlaying = true;
+      switchTrack(state, -1);
     },
   },
 });

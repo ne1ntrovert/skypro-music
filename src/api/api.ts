@@ -27,7 +27,7 @@ export class ApiError extends Error {
   }
 }
 
-const getErrorMessage = (body: ErrorBody) => {
+const parseErrorBody = (body: ErrorBody) => {
   const errors = body.data?.errors;
   if (errors) return Object.values(errors).flat().join(' ');
   return body.message || 'Что-то пошло не так, попробуйте позже';
@@ -48,8 +48,7 @@ const request = async <T>(
     cache: 'no-store',
   });
   const result = await response.json();
-  if (!response.ok)
-    throw new ApiError(response.status, getErrorMessage(result));
+  if (!response.ok) throw new ApiError(response.status, parseErrorBody(result));
   return result;
 };
 

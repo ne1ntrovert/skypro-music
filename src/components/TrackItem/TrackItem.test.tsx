@@ -1,11 +1,11 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import TrackItem from './Track';
+import TrackItem from './TrackItem';
 import { renderWithStore } from '@/test/renderWithStore';
 import { tracks } from '@/test/tracks';
 
 const track = tracks[2];
 
-describe('Track', () => {
+describe('TrackItem', () => {
   it('показывает название, автора, альбом и длительность', () => {
     renderWithStore(<TrackItem track={track} playlist={tracks} />);
     expect(screen.getByText('Harmony')).toBeInTheDocument();

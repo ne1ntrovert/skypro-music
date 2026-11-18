@@ -2,19 +2,20 @@
 
 import { useCallback } from 'react';
 import classNames from 'classnames';
+import Icon from '@/components/Icon/Icon';
 import LikeButton from '@/components/LikeButton/LikeButton';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setCurrentTrack } from '@/store/features/playerSlice';
 import { formatTime } from '@/utils/formatTime';
 import { Track } from '@/types';
-import styles from './Track.module.css';
+import styles from './TrackItem.module.css';
 
-type TrackProps = {
+type TrackItemProps = {
   track: Track;
   playlist: Track[];
 };
 
-export default function TrackItem({ track, playlist }: TrackProps) {
+export default function TrackItem({ track, playlist }: TrackItemProps) {
   const dispatch = useAppDispatch();
   const { currentTrack, isPlaying } = useAppSelector((state) => state.player);
   const isCurrent = currentTrack?._id === track._id;
@@ -35,16 +36,10 @@ export default function TrackItem({ track, playlist }: TrackProps) {
                 })}
               ></div>
             ) : (
-              <svg className={styles.track__titleSvg}>
-                <use href="/img/icon/sprite.svg#icon-note"></use>
-              </svg>
+              <Icon name="icon-note" className={styles.track__titleSvg} />
             )}
           </div>
-          <div className={styles.track__titleText}>
-            <span className={styles.track__titleLink}>
-              {track.name} <span className={styles.track__titleSpan}></span>
-            </span>
-          </div>
+          <span className={styles.track__titleLink}>{track.name}</span>
         </div>
         <div className={styles.track__author}>
           <span className={styles.track__authorLink}>{track.author}</span>

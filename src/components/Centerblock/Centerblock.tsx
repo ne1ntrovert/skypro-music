@@ -3,7 +3,8 @@
 import { useCallback, useMemo, useState } from 'react';
 import Filter from '@/components/Filter/Filter';
 import Playlist from '@/components/Playlist/Playlist';
-import Loader from '@/components/Loader/Loader';
+import Skeleton from '@/components/Skeleton/Skeleton';
+import Icon from '@/components/Icon/Icon';
 import { Track } from '@/types';
 import { Filters, defaultFilters, filterTracks } from '@/utils/filterTracks';
 import styles from './Centerblock.module.css';
@@ -37,9 +38,7 @@ export default function Centerblock({
   return (
     <div className={styles.centerblock}>
       <div className={styles.centerblock__search}>
-        <svg className={styles.search__svg}>
-          <use href="/img/icon/sprite.svg#icon-search"></use>
-        </svg>
+        <Icon name="icon-search" className={styles.search__svg} />
         <input
           className={styles.search__text}
           type="search"
@@ -52,7 +51,7 @@ export default function Centerblock({
       <h2 className={styles.centerblock__h2}>{title}</h2>
       <Filter tracks={tracks} filters={filters} onChange={updateFilters} />
       <div className={styles.centerblock__content}>
-        {isLoading && <Loader />}
+        {isLoading && <Skeleton />}
         {error && <p className={styles.centerblock__error}>{error}</p>}
         {isEmpty && (
           <p className={styles.centerblock__empty}>Нет подходящих треков</p>

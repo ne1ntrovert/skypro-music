@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Icon from '@/components/Icon/Icon';
 import styles from './Sidebar.module.css';
 
 const playlists = [
@@ -13,9 +14,7 @@ export default function Sidebar() {
     <div className={styles.main__sidebar}>
       <div className={styles.sidebar__personal}>
         <div className={styles.sidebar__icon}>
-          <svg className={styles.sidebar__svg}>
-            <use href="/img/icon/sprite.svg#logout"></use>
-          </svg>
+          <Icon name="logout" className={styles.sidebar__svg} />
         </div>
       </div>
       <div className={styles.sidebar__block}>

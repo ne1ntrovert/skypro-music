@@ -3,7 +3,8 @@
 import { MouseEvent, useCallback } from 'react';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { toggleLike } from '@/store/features/favoritesSlice';
+import { selectIsLiked, toggleLike } from '@/store/features/favoritesSlice';
+import Icon from '@/components/Icon/Icon';
 import { Track } from '@/types';
 import styles from './LikeButton.module.css';
 
@@ -14,9 +15,7 @@ type LikeButtonProps = {
 
 export default function LikeButton({ track, className }: LikeButtonProps) {
   const dispatch = useAppDispatch();
-  const isLiked = useAppSelector((state) =>
-    state.favorites.tracks.some((t) => t._id === track._id),
-  );
+  const isLiked = useAppSelector((state) => selectIsLiked(state, track._id));
 
   const handleClick = useCallback(
     (event: MouseEvent) => {
@@ -27,13 +26,12 @@ export default function LikeButton({ track, className }: LikeButtonProps) {
   );
 
   return (
-    <svg
+    <Icon
+      name="icon-like"
       className={classNames(styles.like, className, {
         [styles.like_active]: isLiked,
       })}
       onClick={handleClick}
-    >
-      <use href="/img/icon/sprite.svg#icon-like"></use>
-    </svg>
+    />
   );
 }
